@@ -210,6 +210,7 @@ def get_synonyms(word_find):
 					p2.jathi = jathi_class[j]
 					p2.nigama = nigama_reference[j]
 					p2.linga = linga_gender[j]
+					p2.adhyaya = adhyaya_chapter[j]
 					p2.padam = padam_word[j]
 					p2.synset = synset_word
 					p2.isheadword = "false"
