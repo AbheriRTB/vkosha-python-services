@@ -7,14 +7,14 @@ cols = 500
 rows = 5
 numSets = 0
 
-maxRows = 200
+maxRows = 800
 m = 0
 n = 0
 sizeArray = [0,0,0,0,0]
 
 class vkProp:
 	def __init__(self, isheadword, padam, pratam, nigama, linga, adhyaya, kanda, eng_meaning, sans_meaning, synset, avyaya, \
-	             parapara, janyajanaka, patipatni, swaswamy, vaishistyam, anya, ajivika, avatara, jathi, upadhi):
+	             parapara, janyajanaka, patipatni, swaswamy, dharma, guna, anya, upajivika, avatara, jathi, upadhi,wx_padam,wx_artha):
 		# swaswamy, vaishistya,anya,ajiviak,avatara, patipatni, upadhi):
 		self.isheadword = isheadword
 		self.padam = padam
@@ -31,12 +31,15 @@ class vkProp:
 		self.janyajanaka = janyajanaka
 		self.patipatni = patipatni
 		self.swaswamy = swaswamy
-		self.vaishistyam = vaishistyam
+		self.dharma = dharma
+		self.guna = guna
 		self.anya = anya
-		self.ajivika = ajivika
+		self.upajivika = upajivika
 		self.avatara = avatara
 		self.jathi = jathi
 		self.upadhi = upadhi
+		self.wx_padam = wx_padam
+		self.wx_artha = wx_artha
 
 
 def printJsonOutput(classArray):
@@ -71,16 +74,19 @@ def printJsonOutput(classArray):
 				jsonStr += '"janyajanaka": "' + vkRow[j].janyajanaka + '",' + os.linesep
 				jsonStr += '"patipatni": "' + vkRow[j].patipatni + '",' + os.linesep
 				jsonStr += '"swaswamy": "' + vkRow[j].swaswamy + '",' + os.linesep
-				jsonStr += '"vaishistyam": "' + vkRow[j].vaishistyam + '",' + os.linesep
+				jsonStr += '"dharma": "' + vkRow[j].dharma + '",' + os.linesep
+				jsonStr += '"guna": "' + vkRow[j].guna + '",' + os.linesep
 				jsonStr += '"anya": "' + vkRow[j].anya + '",' + os.linesep
-				jsonStr += '"vaishistyam": "' + vkRow[j].ajivika + '",' + os.linesep
-				jsonStr += '"vaishistyam": "' + vkRow[j].avatara + '",' + os.linesep
-				#here jathi will come
+				jsonStr += '"upajivika": "' + vkRow[j].upajivika + '",' + os.linesep
+				jsonStr += '"avatara": "' + vkRow[j].avatara + '",' + os.linesep
+				jsonStr += '"jathi": "' + vkRow[j].jathi + '"' + os.linesep
 				jsonStr += '"upadhi": "' + vkRow[j].upadhi + '",' + os.linesep
+				jsonStr += '"wx_padam": "' + vkRow[j].wx_padam + '",' + os.linesep
+				jsonStr += '"wx_artha": "' + vkRow[j].wx_artha + '",' + os.linesep
+
 
 
 				jsonStr += '"headword": "' + vkRow[j].synset + '",' + os.linesep
-				jsonStr += '"jathi": "' + vkRow[j].jathi + '"' + os.linesep
 
 				jsonStr += '}'
 				if j < sizeArray[rowid]-1:
@@ -91,7 +97,29 @@ def printJsonOutput(classArray):
 	jsonStr += ']]'
 	return jsonStr
 
-def get_synonyms(word_find, rel_word):
+
+
+'''
+def get_wx_adhyaya(adhyaya):
+	wx_adhyaya = ""
+	if (adhyaya =="आदिदेवाध्यायः"):
+		wx_adhyaya = "AxixevAXyAyaH"
+	elif (adhyaya == "लोकपालाध्यायः"):
+		wx_adhyaya = "lokapAlAXyAyaH"
+	elif (adhyaya == "यक्षाद्यध्यायः"):
+		wx_adhyaya = "yakRAxyaXyAyaH"
+	elif (adhyaya == "ज्योतिरध्यायः"):
+		wx_adhyaya = "jyowiraXyAyaH"
+	elif (adhyaya == "मेघाध्यायः"):
+		wx_adhyaya = "meGAXyAyaH"
+	elif (adhyaya == "खगाध्यायः"):
+		wx_adhyaya = "KagAXyAyaH"
+	elif (adhyaya == "शब्दाध्यायः"):
+		wx_adhyaya = "SabxAXyAyaH"
+	return wx_adhyaya'''
+
+
+def get_synonyms(word_to_find, rel_word):
 
 	myVK = [[vkProp for i in range(cols)] for j in range(rows)]
 	global m
@@ -104,7 +132,7 @@ def get_synonyms(word_find, rel_word):
 		if (rel_word != "null"):
 			synset_word = rel_word
 			n = 0
-		elif (padam_word[i] == word_find ): # if word matches put other attributes it in class obj of vkprop
+		elif ((padam_word[i] == word_to_find) or (wx_padam[i] == word_to_find)): # if word matches put other attributes it in class obj of vkprop
 			synset_word = synset_headwd[i]
 			n = 0
 			'''synonyms.clear()'''
@@ -113,7 +141,7 @@ def get_synonyms(word_find, rel_word):
 				if(synset_headwd[j] == synset_word):      # if its a synset word, get the other details
 
 					p2 = vkProp("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17",\
-					            "19", "20", "21", "22")
+					            "19", "20", "21", "22","23","24","25")
 					p2.padam = padam_word[j]
 					p2.nigama = nigama_reference[j]
 					p2.adhyaya = adhyaya_chapter[j]
@@ -127,11 +155,15 @@ def get_synonyms(word_find, rel_word):
 					p2.janyajanaka = janyajanaka_cp[j]
 					p2.patipatni = patipatni_hw[j]
 					p2.swaswamy = swaswamy_mp[j]
-					p2.vaishistyam = vaishistyam_pec[j]
+					p2.dharma = dharma_pos[j]
+					p2.guna = guna_nature[j]
 					p2.anya = anya_connection[j]
-					p2.ajivika = ajivika_profession[j]
+					p2.upajivika = upajivika_profession[j]
 					p2.avatara = avatara_incarnation[j]
 					p2.upadhi = upadhi_attr[j]
+					p2.wx_padam = wx_padam[j]
+					p2.wx_artha = wx_artha[j]
+
 
 					myVK[m][n] = p2
 					n=n+1
@@ -144,10 +176,66 @@ def get_synonyms(word_find, rel_word):
 
 	return myVK
 #####************************##################
+def get_relations(relNo,word_to_find):
+	print("Inside get relations" + relNo + ' ' + word_to_find)
+	if (relNo == '2'):
+		rel_name = 'Hypernym'
+	elif(relNo == '3'):
+		rel_name = 'Holoonym'
+	elif(relNo == '4'):
+		rel_name = 'Meronym'
+	elif(relNo == '5'):
+		rel_name = 'Hyponym'
 
+	rel_myVK = [[vkProp for i in range(cols)] for j in range(rows)]
+
+	for i in range(0, maxRows - 1):
+		if ((padam_word[i] == word_to_find) or (wx_padam[i] == word_to_find)):  # if word matches put other attributes it in class obj of vkprop
+			if (relNo == '2'): # para hypernym
+				rel_name = "Hypernym"
+				rel_word = para_kindof[i]
+			elif (relNo == '3'):  ##Meronym
+				rel_name = "Meronym"
+				rel_word = avyaya_partof[i]
+			elif (relNo == '4'): ### Holonym
+				rel_name = "Holonym"
+				rel_word = avyaya_partof[i]
+			elif (relNo == '5'): #### hyponym
+				rel_name = "Hyponym"
+				rel_word = para_kindof[i]
+			elif (relNo == '6'): #### janya janaka
+				rel_name = "Janya Janaka"
+				rel_word = janyajanaka_cp[i]
+			elif (relNo == '7'): ### Pati patni
+				rel_name = "Pati Patni"
+				rel_word = patipatni_hw[i]
+			elif (relNo == '8'): ### swamy
+				rel_name = "Swamy "
+				rel_word = swaswamy_mp[i]
+			elif (relNo == '9'):   ####\ sambandhitah
+				rel_name = "Anya Sambandhitah"
+				rel_word = anya_connection[i]
+			elif (relNo == '10'):    #####vrutti
+				rel_name = "Vrutti"
+				rel_word = upajivika_profession[i]
+			elif (relNo == '11'): #### avatara
+				rel_name = "Avatara"
+				rel_word = avatara_incarnation[i]
+
+
+			print("Relation word :", rel_word)
+			print("Relation used : ", rel_name)
+			rel_myVK = get_synonyms("null", rel_word)
+	return rel_myVK
+
+
+
+
+
+'''
 def get_holonyms(holo_word):    #   Col 9 Avayavi - *** Not sure
 	print("This is holonym function")
-	mero_myVK = [[vkProp for i in range(cols)] for j in range(rows)]
+	holo_myVK = [[vkProp for i in range(cols)] for j in range(rows)]
 
 	for i in range(0, maxRows - 1):
 		if (padam_word[i] == holo_word):  # if word matches put other attributes it in class obj of vkprop
@@ -159,6 +247,14 @@ def get_holonyms(holo_word):    #   Col 9 Avayavi - *** Not sure
 
 def get_meronyms(mero_word):  # Col 9 avayava ** same as above??
 	print("This is Meronym function")
+	mero_myVK = [[vkProp for i in range(cols)] for j in range(rows)]
+
+	for i in range(0, maxRows - 1):
+		if (padam_word[i] == mero_word):  # if word matches put other attributes it in class obj of vkprop
+			meronym_word = avyaya_partof[i]
+			print("Meronym word :", meronym_word)
+			mero_myVK = get_synonyms("null", meronym_word)
+	return mero_myVK
 
 
 def get_hypernyms(hyper_word):  #   Col 10 Parajathi
@@ -202,7 +298,7 @@ def get_avatara(avatara_word): # Col 17
 def get_ontology(onto_word): # Col 18 Jathi/ Upadhi
 	print("This is Ontology function")
 
-
+'''
 #######*********Fuctions over***********
 
 #loc = "/Users/Maha/Documents/Samskrit/PGDSCL/Vaijayanthi Kosha/vk.xlsx"
@@ -218,7 +314,7 @@ numSets = m
 
 padam_word =[]           #col 0
 pratam_singular = []     #col 1
-nigama_reference = []     #col 2
+nigama_reference = []    #col 2
 linga_gender = []        #col 3
 adhyaya_chapter = []     #col 4
 kanda_section = []       #col 5
@@ -230,12 +326,15 @@ para_kindof = []         #col 10 hypernym
 janyajanaka_cp = []      #col 11
 patipatni_hw = []        #col 12
 swaswamy_mp = []         #col 13
-vaishistyam_pec = []     #col 14
-anya_connection = []     #col 15
-ajivika_profession = []  #col 16
-avatara_incarnation = [] #col 17
-jathi_class = []         #col 18  jathi
-upadhi_attr = []         #col 19  upadhi
+dharma_pos = []          #col 14
+guna_nature = []         #col 15
+anya_connection = []     #col 16
+upajivika_profession = []  #col 17
+avatara_incarnation = []   #col 18
+jathi_class = []           #col 19  jathi
+upadhi_attr = []           #col 20  upadhi
+wx_padam = []              #col 21 wx_notation
+wx_artha = []              #col 22 wx_artha
 
 synonyms = []
 synset_word = ''
@@ -243,7 +342,7 @@ jathi_words = []
 
 padamArray = []
 
-p1 = vkProp("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "19", "20", "21", "22")
+p1 = vkProp("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "19", "20", "21", "22","23","24","25")
 
 #m = 0
 ##Getting all the values of xl in an array
@@ -262,9 +361,12 @@ for i in range(1, maxRows):
 	janyajanaka_cp.append(sheet.cell_value(i,11))
 	patipatni_hw.append(sheet.cell_value(i,12))
 	swaswamy_mp.append(sheet.cell_value(i,13))
-	vaishistyam_pec.append(sheet.cell_value(i,14))
-	anya_connection.append(sheet.cell_value(i,15))
-	ajivika_profession.append(sheet.cell_value(i,16))
-	avatara_incarnation.append(sheet.cell_value(i,17))
-	jathi_class.append(sheet.cell_value(i,18))
-	upadhi_attr.append(sheet.cell_value(i,19))
+	dharma_pos.append(sheet.cell_value(i,14))
+	guna_nature.append(sheet.cell_value(i,15))
+	anya_connection.append(sheet.cell_value(i,16))
+	upajivika_profession.append(sheet.cell_value(i,17))
+	avatara_incarnation.append(sheet.cell_value(i,18))
+	jathi_class.append(sheet.cell_value(i,19))
+	upadhi_attr.append(sheet.cell_value(i,20))
+	wx_padam.append(sheet.cell_value(i,21))
+	wx_artha.append(sheet.cell_value(i,22))
