@@ -79,14 +79,12 @@ def printJsonOutput(classArray):
 				jsonStr += '"anya": "' + vkRow[j].anya + '",' + os.linesep
 				jsonStr += '"upajivika": "' + vkRow[j].upajivika + '",' + os.linesep
 				jsonStr += '"avatara": "' + vkRow[j].avatara + '",' + os.linesep
-				jsonStr += '"jathi": "' + vkRow[j].jathi + '"' + os.linesep
+				jsonStr += '"jathi": "' + vkRow[j].jathi + '",' + os.linesep
 				jsonStr += '"upadhi": "' + vkRow[j].upadhi + '",' + os.linesep
 				jsonStr += '"wx_padam": "' + vkRow[j].wx_padam + '",' + os.linesep
 				jsonStr += '"wx_artha": "' + vkRow[j].wx_artha + '",' + os.linesep
 
-
-
-				jsonStr += '"headword": "' + vkRow[j].synset + '",' + os.linesep
+				jsonStr += '"headword": "' + vkRow[j].synset + '"' + os.linesep
 
 				jsonStr += '}'
 				if j < sizeArray[rowid]-1:
@@ -98,25 +96,6 @@ def printJsonOutput(classArray):
 	return jsonStr
 
 
-
-'''
-def get_wx_adhyaya(adhyaya):
-	wx_adhyaya = ""
-	if (adhyaya =="आदिदेवाध्यायः"):
-		wx_adhyaya = "AxixevAXyAyaH"
-	elif (adhyaya == "लोकपालाध्यायः"):
-		wx_adhyaya = "lokapAlAXyAyaH"
-	elif (adhyaya == "यक्षाद्यध्यायः"):
-		wx_adhyaya = "yakRAxyaXyAyaH"
-	elif (adhyaya == "ज्योतिरध्यायः"):
-		wx_adhyaya = "jyowiraXyAyaH"
-	elif (adhyaya == "मेघाध्यायः"):
-		wx_adhyaya = "meGAXyAyaH"
-	elif (adhyaya == "खगाध्यायः"):
-		wx_adhyaya = "KagAXyAyaH"
-	elif (adhyaya == "शब्दाध्यायः"):
-		wx_adhyaya = "SabxAXyAyaH"
-	return wx_adhyaya'''
 
 
 def get_synonyms(word_to_find, rel_word):
@@ -178,50 +157,42 @@ def get_synonyms(word_to_find, rel_word):
 #####************************##################
 def get_relations(relNo,word_to_find):
 	print("Inside get relations" + relNo + ' ' + word_to_find)
-	if (relNo == '2'):
-		rel_name = 'Hypernym'
-	elif(relNo == '3'):
-		rel_name = 'Holoonym'
-	elif(relNo == '4'):
-		rel_name = 'Meronym'
-	elif(relNo == '5'):
-		rel_name = 'Hyponym'
+
 
 	rel_myVK = [[vkProp for i in range(cols)] for j in range(rows)]
 
 	for i in range(0, maxRows - 1):
 		if ((padam_word[i] == word_to_find) or (wx_padam[i] == word_to_find)):  # if word matches put other attributes it in class obj of vkprop
-			if (relNo == '2'): # para hypernym
-				rel_name = "Hypernym"
-				rel_word = para_kindof[i]
-			elif (relNo == '3'):  ##Meronym
-				rel_name = "Meronym"
-				rel_word = avyaya_partof[i]
-			elif (relNo == '4'): ### Holonym
+			if (relNo == '1'): ### Holonym
 				rel_name = "Holonym"
 				rel_word = avyaya_partof[i]
-			elif (relNo == '5'): #### hyponym
+			elif (relNo == '2'):  ##Meronym
+				rel_name = "Meronym"
+				rel_word = avyaya_partof[i]
+			elif (relNo == '3'): # para hypernym
+				rel_name = "Hypernym"
+				rel_word = para_kindof[i]
+			elif (relNo == '4'): #### hyponym
 				rel_name = "Hyponym"
 				rel_word = para_kindof[i]
-			elif (relNo == '6'): #### janya janaka
+			elif (relNo == '5' or relNo == '6' ): #### janya janaka
 				rel_name = "Janya Janaka"
 				rel_word = janyajanaka_cp[i]
-			elif (relNo == '7'): ### Pati patni
+			elif (relNo == '7' or relNo == '8'): ### Pati patni
 				rel_name = "Pati Patni"
 				rel_word = patipatni_hw[i]
-			elif (relNo == '8'): ### swamy
+			elif (relNo == '9' or relNo == '10'): ### swamy
 				rel_name = "Swamy "
 				rel_word = swaswamy_mp[i]
-			elif (relNo == '9'):   ####\ sambandhitah
+			elif (relNo == '11'):   ####\ sambandhitah
 				rel_name = "Anya Sambandhitah"
 				rel_word = anya_connection[i]
-			elif (relNo == '10'):    #####vrutti
+			elif (relNo == '12'):    #####vrutti
 				rel_name = "Vrutti"
 				rel_word = upajivika_profession[i]
-			elif (relNo == '11'): #### avatara
+			elif (relNo == '13'): #### avatara
 				rel_name = "Avatara"
 				rel_word = avatara_incarnation[i]
-
 
 			print("Relation word :", rel_word)
 			print("Relation used : ", rel_name)

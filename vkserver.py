@@ -32,6 +32,16 @@ def findword(wordtofind):
 	retstring = printJsonOutput(vkArrayOutput)
 	return retstring
 
+@app.route('/vkosha/findrelation',methods=['GET'])
+def findrelation():
+	retstring = ", "
+	wordtofind = request.args.get('wordtofind', None)
+	relation = request.args.get('relation', None)
+	print('The given word is : ' + wordtofind + '& relation is: ' + relation)
+	vkArrayOutput = get_relations(relation, wordtofind)
+	retstring = printJsonOutput(vkArrayOutput)
+	return retstring
+
 @app.route('/vkosha/helloworld',methods=['GET'])
 def vkHello():
 	return "Hello World!"
