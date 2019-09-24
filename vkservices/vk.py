@@ -7,7 +7,7 @@ cols = 500
 rows = 5
 numSets = 0
 
-maxRows = 800
+maxRows = 2000
 m = 0
 n = 0
 sizeArray = [0,0,0,0,0]
@@ -102,6 +102,7 @@ def get_synonyms(word_to_find, rel_word):
 
 	myVK = [[vkProp for i in range(cols)] for j in range(rows)]
 	global m
+
 	for k in range(0, len(sizeArray)):
 		sizeArray[k] = 0
 	#myVK = [[vkProp for i in range(cols)] for j in range(rows)]
@@ -158,8 +159,9 @@ def get_synonyms(word_to_find, rel_word):
 def get_relations(relNo,word_to_find):
 	print("Inside get relations" + relNo + ' ' + word_to_find)
 
-
 	rel_myVK = [[vkProp for i in range(cols)] for j in range(rows)]
+	tmpSizeArray = [0,0,0,0,0]
+	idx=0
 
 	for i in range(0, maxRows - 1):
 		if ((padam_word[i] == word_to_find) or (wx_padam[i] == word_to_find)):  # if word matches put other attributes it in class obj of vkprop
@@ -196,7 +198,14 @@ def get_relations(relNo,word_to_find):
 
 			print("Relation word :", rel_word)
 			print("Relation used : ", rel_name)
-			rel_myVK = get_synonyms("null", rel_word)
+
+			test = get_synonyms("null", rel_word)
+			for i in range(0, cols):
+				rel_myVK[idx][i]=test[0][i]
+			tmpSizeArray[idx] = sizeArray[0]
+			idx = idx+1
+	for k in range(0, len(sizeArray)):
+		sizeArray[k] = tmpSizeArray[k]
 	return rel_myVK
 
 
