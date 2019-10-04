@@ -4,42 +4,50 @@ import xlrd
 import os
 
 cols = 500
-rows = 5
+rows = 30
 numSets = 0
 
-maxRows = 2000
+maxRows = 2400
 m = 0
 n = 0
-sizeArray = [0,0,0,0,0]
+sizeArray = [0,0,0,0,0,
+             0,0,0,0,0,
+             0,0,0,0,0,
+             0,0,0,0,0,
+             0,0,0,0,0,
+             0,0,0,0,0]
 
 class vkProp:
-	def __init__(self, isheadword, padam, pratam, nigama, linga, adhyaya, kanda, eng_meaning, sans_meaning, synset, avyaya, \
-	             parapara, janyajanaka, patipatni, swaswamy, dharma, guna, anya, upajivika, avatara, jathi, upadhi,wx_padam,wx_artha):
-		# swaswamy, vaishistya,anya,ajiviak,avatara, patipatni, upadhi):
-		self.isheadword = isheadword
-		self.padam = padam
-		self.pratam = pratam
-		self.nigama = nigama
-		self.linga = linga
-		self.adhyaya = adhyaya
-		self.kanda = kanda
-		self.eng_meaning = eng_meaning
-		self.sans_meaning = sans_meaning
-		self.synset = synset
-		self.avyaya = avyaya
-		self.parapara = parapara
-		self.janyajanaka = janyajanaka
-		self.patipatni = patipatni
-		self.swaswamy = swaswamy
-		self.dharma = dharma
-		self.guna = guna
-		self.anya = anya
-		self.upajivika = upajivika
-		self.avatara = avatara
-		self.jathi = jathi
-		self.upadhi = upadhi
-		self.wx_padam = wx_padam
-		self.wx_artha = wx_artha
+    def __init__(self, isheadword, padam, pratam, nigama, linga, adhyaya, kanda, eng_meaning, sans_meaning,
+                 meaning_source, synset, avyaya, \
+                 parapara, janyajanaka, patipatni, swaswamy, dharma, guna, anya, upajivika, avatara, jathi, upadhi,
+                 wx_padam, wx_artha):
+        # swaswamy, vaishistya,anya,ajiviak,avatara, patipatni, upadhi):
+        self.isheadword = isheadword
+        self.padam = padam
+        self.pratam = pratam
+        self.nigama = nigama
+        self.linga = linga
+        self.adhyaya = adhyaya
+        self.kanda = kanda
+        self.eng_meaning = eng_meaning
+        self.sans_meaning = sans_meaning
+        self.meaning_source = meaning_source
+        self.synset = synset
+        self.avyaya = avyaya
+        self.parapara = parapara
+        self.janyajanaka = janyajanaka
+        self.patipatni = patipatni
+        self.swaswamy = swaswamy
+        self.dharma = dharma
+        self.guna = guna
+        self.anya = anya
+        self.upajivika = upajivika
+        self.avatara = avatara
+        self.jathi = jathi
+        self.upadhi = upadhi
+        self.wx_padam = wx_padam
+        self.wx_artha = wx_artha
 
 
 def printJsonOutput(classArray):
@@ -98,10 +106,11 @@ def printJsonOutput(classArray):
 
 
 
-def get_synonyms(word_to_find, rel_word):
+def get_synonyms(word_to_find, rel_word, relnostr):
 
 	myVK = [[vkProp for i in range(cols)] for j in range(rows)]
 	global m
+	compare_word = ""
 
 	for k in range(0, len(sizeArray)):
 		sizeArray[k] = 0
@@ -116,12 +125,51 @@ def get_synonyms(word_to_find, rel_word):
 			synset_word = synset_headwd[i]
 			n = 0
 			'''synonyms.clear()'''
+		relno = int(relnostr)
+
 		if(synset_word != None):
 			for j in range(0,maxRows-1):
-				if(synset_headwd[j] == synset_word):      # if its a synset word, get the other details
+				if (relno == 0):
+					compare_word = synset_headwd[j]
+				elif (relno == 1):
+					compare_word = synset_headwd[j]
+				elif (relno == 2):
+					compare_word = avyaya_partof[j]
+				elif (relno == 3):
+					compare_word = synset_headwd[j]
+				elif (relno == 4):
+					compare_word = para_kindof[j]
+				elif (relno == 5):
+					compare_word = synset_headwd[j]
+				elif (relno == 6):
+					compare_word = janyajanaka_cp[j]
+				elif (relno == 7):
+					compare_word = synset_headwd[j]
+				elif (relno == 8):
+					compare_word = patipatni_hw[j]
+				elif (relno == 9):
+					compare_word = synset_headwd[j]
+				elif (relno == 10):
+					compare_word = swaswamy_mp[j]
+				elif (relno == 11):
+					compare_word = synset_headwd[j]
+				elif (relno == 12):
+					compare_word = dharma_pos[j]
+				elif (relno == 13):
+					compare_word = synset_headwd[j]
+				elif (relno == 14):
+					compare_word = guna_nature[j]
+				elif (relno == 15):
+					compare_word = synset_headwd[j]
+				elif (relno == 16):
+					compare_word = synset_headwd[j]
+				elif (relno == 17):
+					compare_word = synset_headwd[j]
+
+				if(compare_word == synset_word):      # if its a synset word, get the other details
 
 					p2 = vkProp("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17",\
-					            "19", "20", "21", "22","23","24","25")
+					            "19", "20", "21", "22","23","24","25","26")
 					p2.padam = padam_word[j]
 					p2.nigama = nigama_reference[j]
 					p2.adhyaya = adhyaya_chapter[j]
@@ -145,6 +193,7 @@ def get_synonyms(word_to_find, rel_word):
 					p2.wx_artha = wx_artha[j]
 
 
+
 					myVK[m][n] = p2
 					n=n+1
 
@@ -160,46 +209,72 @@ def get_relations(relNo,word_to_find):
 	print("Inside get relations" + relNo + ' ' + word_to_find)
 
 	rel_myVK = [[vkProp for i in range(cols)] for j in range(rows)]
-	tmpSizeArray = [0,0,0,0,0]
+	tmpSizeArray = [0,0,0,0,0,
+             0,0,0,0,0,
+             0,0,0,0,0,
+             0,0,0,0,0,
+             0,0,0,0,0,
+             0,0,0,0,0]
 	idx=0
 
 	for i in range(0, maxRows - 1):
 		if ((padam_word[i] == word_to_find) or (wx_padam[i] == word_to_find)):  # if word matches put other attributes it in class obj of vkprop
-			if (relNo == '1'): ### Holonym
+			if (relNo == '1'):  ### Holonym
 				rel_name = "Holonym"
 				rel_word = avyaya_partof[i]
 			elif (relNo == '2'):  ##Meronym
 				rel_name = "Meronym"
-				rel_word = avyaya_partof[i]
-			elif (relNo == '3'): # para hypernym
+				rel_word = synset_headwd[i]
+			elif (relNo == '3'):  # para hypernym
 				rel_name = "Hypernym"
 				rel_word = para_kindof[i]
-			elif (relNo == '4'): #### hyponym
+			elif (relNo == '4'):  #### hyponym
 				rel_name = "Hyponym"
-				rel_word = para_kindof[i]
-			elif (relNo == '5' or relNo == '6' ): #### janya janaka
-				rel_name = "Janya Janaka"
+				rel_word = synset_headwd[i]
+			elif (relNo == '5'):  #### janya
+				rel_name = "Janya"
 				rel_word = janyajanaka_cp[i]
-			elif (relNo == '7' or relNo == '8'): ### Pati patni
-				rel_name = "Pati Patni"
+			elif (relNo == '6'):  ## janaka
+				rel_name = "Janaka"
+				rel_word = synset_headwd[i]
+			elif (relNo == '7'):  ### Pati
+				rel_name = "Pati "
 				rel_word = patipatni_hw[i]
-			elif (relNo == '9' or relNo == '10'): ### swamy
-				rel_name = "Swamy "
+			elif (relNo == '8'):  # Patni
+				rel_name = "Patni"
+				rel_word = synset_headwd[i]
+			elif (relNo == '9'):  ### sevaka
+				rel_name = "Sevaka "
 				rel_word = swaswamy_mp[i]
-			elif (relNo == '11'):   ####\ sambandhitah
+			elif (relNo == '10'):  # swamy
+				rel_name = "Swamy"
+				rel_word = synset_headwd[i]
+			elif (relNo == '11'):  ### Dharmi
+				rel_name = "Dharmi "
+				rel_word = dharma_pos[i]
+			elif (relNo == '12'):  # Dharma
+				rel_name = "dharma"
+				rel_word = synset_headwd[i]
+			elif (relNo == '13'):  ### guni
+				rel_name = "guni "
+				rel_word = guna_nature[i]
+			elif (relNo == '14'):  # guna
+				rel_name = "guna"
+				rel_word = synset_headwd[i]
+			elif (relNo == '15'):  ####\ sambandhitah
 				rel_name = "Anya Sambandhitah"
 				rel_word = anya_connection[i]
-			elif (relNo == '12'):    #####vrutti
+			elif (relNo == '16'):  #####vrutti
 				rel_name = "Vrutti"
 				rel_word = upajivika_profession[i]
-			elif (relNo == '13'): #### avatara
+			elif (relNo == '17'):  #### avatara
 				rel_name = "Avatara"
 				rel_word = avatara_incarnation[i]
 
 			print("Relation word :", rel_word)
 			print("Relation used : ", rel_name)
 
-			test = get_synonyms("null", rel_word)
+			test = get_synonyms("null", rel_word, relNo)
 			for i in range(0, cols):
 				rel_myVK[idx][i]=test[0][i]
 			tmpSizeArray[idx] = sizeArray[0]
@@ -300,21 +375,22 @@ adhyaya_chapter = []     #col 4
 kanda_section = []       #col 5
 eng_meaning = []         #col 6
 sans_meaning = []        #col 7
-synset_headwd = []       #col 8
-avyaya_partof = []       #col 9  holonym
-para_kindof = []         #col 10 hypernym
-janyajanaka_cp = []      #col 11
-patipatni_hw = []        #col 12
-swaswamy_mp = []         #col 13
-dharma_pos = []          #col 14
-guna_nature = []         #col 15
-anya_connection = []     #col 16
-upajivika_profession = []  #col 17
-avatara_incarnation = []   #col 18
-jathi_class = []           #col 19  jathi
-upadhi_attr = []           #col 20  upadhi
-wx_padam = []              #col 21 wx_notation
-wx_artha = []              #col 22 wx_artha
+meaning_source = []      #col 8
+synset_headwd = []       #col 9
+avyaya_partof = []       #col 10  holonym
+para_kindof = []         #col 11 hypernym
+janyajanaka_cp = []      #col 12
+patipatni_hw = []        #col 13
+swaswamy_mp = []         #col 14
+dharma_pos = []          #col 15
+guna_nature = []         #col 16
+anya_connection = []     #col 17
+upajivika_profession = []  #col 18
+avatara_incarnation = []   #col 19
+jathi_class = []           #col 20  jathi
+upadhi_attr = []           #col 21  upadhi
+wx_padam = []              #col 22 wx_notation
+wx_artha = []              #col 23 wx_artha
 
 synonyms = []
 synset_word = ''
@@ -322,31 +398,32 @@ jathi_words = []
 
 padamArray = []
 
-p1 = vkProp("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "19", "20", "21", "22","23","24","25")
+p1 = vkProp("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "19", "20", "21", "22","23","24","25","26")
 
 #m = 0
 ##Getting all the values of xl in an array
 for i in range(1, maxRows):
-	padam_word.append(sheet.cell_value(i,0))
-	pratam_singular.append(sheet.cell_value(i,1))
-	nigama_reference.append(sheet.cell_value(i,2))
-	linga_gender.append(sheet.cell_value(i,3))
-	adhyaya_chapter.append(sheet.cell_value(i,4))
-	kanda_section.append(sheet.cell_value(i,5))
-	eng_meaning.append(sheet.cell_value(i,6))
-	sans_meaning.append(sheet.cell_value(i,7))
-	synset_headwd.append(sheet.cell_value(i,8))
-	avyaya_partof.append(sheet.cell_value(i,9))
-	para_kindof.append(sheet.cell_value(i,10))
-	janyajanaka_cp.append(sheet.cell_value(i,11))
-	patipatni_hw.append(sheet.cell_value(i,12))
-	swaswamy_mp.append(sheet.cell_value(i,13))
-	dharma_pos.append(sheet.cell_value(i,14))
-	guna_nature.append(sheet.cell_value(i,15))
-	anya_connection.append(sheet.cell_value(i,16))
-	upajivika_profession.append(sheet.cell_value(i,17))
-	avatara_incarnation.append(sheet.cell_value(i,18))
-	jathi_class.append(sheet.cell_value(i,19))
-	upadhi_attr.append(sheet.cell_value(i,20))
-	wx_padam.append(sheet.cell_value(i,21))
-	wx_artha.append(sheet.cell_value(i,22))
+   padam_word.append(sheet.cell_value(i,0))
+   pratam_singular.append(sheet.cell_value(i,1))
+   nigama_reference.append(sheet.cell_value(i,2))
+   linga_gender.append(sheet.cell_value(i,3))
+   adhyaya_chapter.append(sheet.cell_value(i,4))
+   kanda_section.append(sheet.cell_value(i,5))
+   eng_meaning.append(sheet.cell_value(i,6))
+   sans_meaning.append(sheet.cell_value(i,7))
+   meaning_source.append(sheet.cell_value(i,8))
+   synset_headwd.append(sheet.cell_value(i,9))
+   avyaya_partof.append(sheet.cell_value(i,10))
+   para_kindof.append(sheet.cell_value(i,11))
+   janyajanaka_cp.append(sheet.cell_value(i,12))
+   patipatni_hw.append(sheet.cell_value(i,13))
+   swaswamy_mp.append(sheet.cell_value(i,14))
+   dharma_pos.append(sheet.cell_value(i,15))
+   guna_nature.append(sheet.cell_value(i,16))
+   anya_connection.append(sheet.cell_value(i,17))
+   upajivika_profession.append(sheet.cell_value(i,18))
+   avatara_incarnation.append(sheet.cell_value(i,19))
+   jathi_class.append(sheet.cell_value(i,20))
+   upadhi_attr.append(sheet.cell_value(i,21))
+   wx_padam.append(sheet.cell_value(i,21))
+   wx_artha.append(sheet.cell_value(i,21))

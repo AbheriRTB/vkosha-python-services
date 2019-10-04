@@ -6,13 +6,13 @@ word_find = input('Enter the Word : ')
 rel_No = input("Enter relation Number : ")
 
 print('The given word is : ' + word_find)
-print('The Rel word is : ' + rel_No)
+print('The Rel No is : ' + rel_No)
 
 rel_jsonstr = ""
 
-if (rel_No == "1"):
+if (rel_No == "0"):
 	print("The synonyms")    # Col 8 Synset 1
-	rel_vkArrayOutput = get_synonyms(word_find, "null")
+	rel_vkArrayOutput = get_synonyms(word_find, "null", 0)
 	print("")
 	rel_jsonstr = printJsonOutput(rel_vkArrayOutput)
 	print("Json String is")
