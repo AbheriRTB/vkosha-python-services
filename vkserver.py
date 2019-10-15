@@ -28,7 +28,7 @@ def findwordold2(wordtofind):
 def findword(wordtofind):
 	retstring = ", "
 	print('The given word is : ' + wordtofind)
-	vkArrayOutput = get_synonyms(wordtofind, "null", 0)
+	vkArrayOutput = get_synonyms(wordtofind, "null", '0')
 	retstring = printJsonOutput(vkArrayOutput)
 	return retstring
 
