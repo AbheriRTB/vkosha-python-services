@@ -3,6 +3,8 @@ import sys
 from vkservices.vk import *
 
 word_find = input('Enter the Word : ')
+print (" 0 - synset, 1 - avayavi(holo), 2- avayava(mero), 3-para(hyper), 4 -apara(hypo), 5-janya, 6-janak, 7-pati,\
+ 8-patni, 9-sevaka, 10-swamy, 11-dharmi, 12-dharma, 13-guni, 14-guna, 15-sambanda, 16-vrutti, 17-aavatara, 18-ontology")
 rel_No = input("Enter relation Number : ")
 
 print('The given word is : ' + word_find)
@@ -19,44 +21,8 @@ if (rel_No == "0"):
 	print(rel_jsonstr)
 else:
 	rel_vkArrayOutput = get_relations(rel_No, word_find)
-	rel_jsonstr = printJsonOutput(rel_vkArrayOutput)
-	print("Json String is")
-	print(rel_jsonstr)
-	#print("This is a" + rel_name + "function")
 
-'''
-elif (rel_No == "2"):
-	print("The Hypernyms")    # Col 10 parapara - Hypernym 2 ( & 5 same)
-	rel_vkArrayOutput = get_hypernyms(word_find)
 	rel_jsonstr = printJsonOutput(rel_vkArrayOutput)
 	print("Json String is")
 	print(rel_jsonstr)
-	print("This is hypernym function")
-elif (rel_No == "3"):
-	print("The Holonyms")     # Col 9  Holonym - avyaya 3 (& 4 same)
-	rel_vkArrayOutput = get_holonyms(word_find)
-	rel_jsonstr = printJsonOutput(rel_vkArrayOutput)
-	print("Json String is")
-	print(rel_jsonstr)
-	print("This is holonym function")
-elif (rel_No == "4"): #  Meronym 4 (& 3 same)
-	print("The Meronyms")
-	rel_vkArrayOutput = get_meronyms(word_find)
-	rel_jsonstr = printJsonOutput(rel_vkArrayOutput)
-	print("Json String is")
-	print(rel_jsonstr)
-	print("This is meronym function")
-elif (rel_No == "5"): # Hyponym 5 (& 2 same)
-	print("The Hyponyms")
-	rel_vkArrayOutput = get_hyponyms(word_find)
-	rel_jsonstr = printJsonOutput(rel_vkArrayOutput)
-	print("Json String is")
-	print(rel_jsonstr)
-	print("This is hyponym function")
-else:
-	print("Enter a valid Relation")
-	#exit()'''
-
-'''print("Json String is")
-print(rel_jsonstr)
-print("This is hyponym function")'''
+#print("This is a" + rel_name + "function")
