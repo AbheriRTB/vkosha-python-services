@@ -132,47 +132,45 @@ def get_synonyms(word_to_find, rel_word, relnostr):
 
 		if (synset_word != None):
 			for j in range(0, maxRows - 1):
-				if (relno == 0):
+				if (relno == 0): #synset
 					compare_word = synset_headwd[j]
-				elif (relno == 1):
+				elif (relno == 1): #avayavi direct
 					compare_word = synset_headwd[j]
-				elif (relno == 2):
+				elif (relno == 2): #avayavah
 					compare_word = avyaya_partof[j]
-				elif (relno == 3):
+				elif (relno == 3): # parajati direct
 					compare_word = synset_headwd[j]
-				elif (relno == 4):
+				elif (relno == 4): #aparajati
 					compare_word = para_kindof[j]
-				elif (relno == 5):
-					compare_word = synset_headwd[j]
-				elif (relno == 6):
+				elif (relno == 5): #janya
 					compare_word = janyajanaka_cp[j]
-				elif (relno == 7):
+				elif (relno == 6): # janaka direct
 					compare_word = synset_headwd[j]
-				elif (relno == 8):
+				elif (relno == 7): # pati direct
+					compare_word = synset_headwd[j]
+				elif (relno == 8): #patni
 					compare_word = patipatni_hw[j]
-				elif (relno == 9):
+				elif (relno == 9): #sevaka
+					compare_word = swaswamy_mp[j]
+				elif (relno == 10): #swamy direct
+					compare_word =  synset_headwd[j]
+				elif (relno == 11): #dharmi direct
 					compare_word = synset_headwd[j]
-				elif (relno == 10):
-					compare_word =  swaswamy_mp[j]
-				elif (relno == 11):
-					compare_word = synset_headwd[j]
-				elif (relno == 12):
+				elif (relno == 12): #dharma
 					compare_word = dharma_pos[j]
-				elif (relno == 13):
+				elif (relno == 13): # guni direct
 					compare_word = synset_headwd[j]
-				elif (relno == 14):
+				elif (relno == 14): # guna
 					compare_word = guna_nature[j]
-				elif (relno == 15):
+				elif (relno == 15): # sambadda
 					compare_word = synset_headwd[j]
-				elif (relno == 16):
-					'''Making it dummy'''
-					compare_word = ""
-				elif (relno == 17):
-					'''Making it dummy'''
-					compare_word = ""
-				elif (relno == 18):
+				elif (relno == 16): #upajivyah direct
+					compare_word = 	synset_headwd[j]
+				elif (relno == 17): #upajiakah
+					compare_word = upajivika_profession[j]
+				elif (relno == 18): # avatarah
 					compare_word = synset_headwd[j]
-				elif (relno == 19):
+				elif (relno == 19): #ontology
 					compare_word = jathi_class[j]
 
 				if (compare_word == synset_word):  # if its a synset word, get the other details
@@ -240,7 +238,7 @@ def get_relations(relNo, word_to_find):
 			elif (relNo == '2'):  ##Meronym
 				rel_name = "Meronym"
 				rel_word = synset_headwd[i]
-			elif (relNo == '3'):  # para hypernym
+			elif (relNo == '3'):  # para hypernym direct
 				rel_name = "Hypernym"
 				rel_word = para_kindof[i]
 			elif (relNo == '4'):  #### hyponym
@@ -248,11 +246,11 @@ def get_relations(relNo, word_to_find):
 				rel_word = synset_headwd[i]
 			elif (relNo == '5'):  #### janya
 				rel_name = "Janya"
-				rel_word = janyajanaka_cp[i]
-			elif (relNo == '6'):  ## janaka
-				rel_name = "Janaka"
 				rel_word = synset_headwd[i]
-			elif (relNo == '7'):  ### Pati
+			elif (relNo == '6'):  ## janaka direct
+				rel_name = "Janaka"
+				rel_word = janyajanaka_cp[i]
+			elif (relNo == '7'):  ### Pati direct
 				rel_name = "Pati "
 				rel_word = patipatni_hw[i]
 			elif (relNo == '8'):  # Patni
@@ -260,17 +258,17 @@ def get_relations(relNo, word_to_find):
 				rel_word = synset_headwd[i]
 			elif (relNo == '9'):  ### sevaka
 				rel_name = "Sevaka "
-				rel_word = swaswamy_mp[i]
-			elif (relNo == '10'):  # swamy
+				rel_word = synset_headwd[i]
+			elif (relNo == '10'):  # swamy direct
 				rel_name = "Swamy"
-				rel_word =   synset_headwd[i]
-			elif (relNo == '11'):  ### Dharmi
+				rel_word =   swaswamy_mp[i]
+			elif (relNo == '11'):  ### Dharmi direct
 				rel_name = "Dharmi "
 				rel_word = dharma_pos[i]
 			elif (relNo == '12'):  # Dharma
 				rel_name = "dharma"
 				rel_word = synset_headwd[i]
-			elif (relNo == '13'):  ### guni
+			elif (relNo == '13'):  ### guni direct
 				rel_name = "guna "
 				rel_word = guna_nature[i]
 			elif (relNo == '14'):  # guna
@@ -279,12 +277,12 @@ def get_relations(relNo, word_to_find):
 			elif (relNo == '15'):  ####\ sambandhitah
 				rel_name = "Anya Sambandhitah"
 				rel_word = anya_connection[i]
-			elif (relNo == '16'):  #####upajeevyah
+			elif (relNo == '16'):  #####upajeevyah direct
 				rel_name = "Upajeevyah"
 				rel_word = upajivika_profession[i]
 			elif (relNo == '17'):  #####upajeevikah
 				rel_name = "Upajeevakah"
-				rel_word = upajivika_profession[i]
+				rel_word = synset_headwd[i]
 			elif (relNo == '18'):  #### avatara
 				rel_name = "Avatara"
 				rel_word = avatara_incarnation[i]
