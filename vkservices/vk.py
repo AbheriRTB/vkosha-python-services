@@ -153,7 +153,7 @@ def get_synonyms(word_to_find, rel_word, relnostr):
 				elif (relno == 9):
 					compare_word = synset_headwd[j]
 				elif (relno == 10):
-					compare_word = swaswamy_mp[j]
+					compare_word =  swaswamy_mp[j]
 				elif (relno == 11):
 					compare_word = synset_headwd[j]
 				elif (relno == 12):
@@ -165,10 +165,14 @@ def get_synonyms(word_to_find, rel_word, relnostr):
 				elif (relno == 15):
 					compare_word = synset_headwd[j]
 				elif (relno == 16):
-					compare_word = synset_headwd[j]
+					'''Making it dummy'''
+					compare_word = ""
 				elif (relno == 17):
-					compare_word = synset_headwd[j]
+					'''Making it dummy'''
+					compare_word = ""
 				elif (relno == 18):
+					compare_word = synset_headwd[j]
+				elif (relno == 19):
 					compare_word = jathi_class[j]
 
 				if (compare_word == synset_word):  # if its a synset word, get the other details
@@ -259,7 +263,7 @@ def get_relations(relNo, word_to_find):
 				rel_word = swaswamy_mp[i]
 			elif (relNo == '10'):  # swamy
 				rel_name = "Swamy"
-				rel_word = synset_headwd[i]
+				rel_word =   synset_headwd[i]
 			elif (relNo == '11'):  ### Dharmi
 				rel_name = "Dharmi "
 				rel_word = dharma_pos[i]
@@ -267,21 +271,24 @@ def get_relations(relNo, word_to_find):
 				rel_name = "dharma"
 				rel_word = synset_headwd[i]
 			elif (relNo == '13'):  ### guni
-				rel_name = "guni "
+				rel_name = "guna "
 				rel_word = guna_nature[i]
 			elif (relNo == '14'):  # guna
-				rel_name = "guna"
+				rel_name = "guni"
 				rel_word = synset_headwd[i]
 			elif (relNo == '15'):  ####\ sambandhitah
 				rel_name = "Anya Sambandhitah"
 				rel_word = anya_connection[i]
-			elif (relNo == '16'):  #####vrutti
-				rel_name = "Vrutti"
+			elif (relNo == '16'):  #####upajeevyah
+				rel_name = "Upajeevyah"
 				rel_word = upajivika_profession[i]
-			elif (relNo == '17'):  #### avatara
+			elif (relNo == '17'):  #####upajeevikah
+				rel_name = "Upajeevakah"
+				rel_word = upajivika_profession[i]
+			elif (relNo == '18'):  #### avatara
 				rel_name = "Avatara"
 				rel_word = avatara_incarnation[i]
-			elif (relNo == '18'):
+			elif (relNo == '19'):
 				rel_name = 'Ontology'
 				rel_word = jathi_class[i]
 				upadhi_word = upadhi_attr[i]
@@ -289,7 +296,7 @@ def get_relations(relNo, word_to_find):
 			print("Relation word :", rel_word)
 			print("Relation used : ", rel_name)
 
-			if (relNo != "18"):
+			if (relNo != "19"):
 				test = get_synonyms("null", rel_word, relNo)
 			else:
 				test = get_ontology(rel_word, upadhi_word)
