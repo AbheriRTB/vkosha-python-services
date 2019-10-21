@@ -268,12 +268,12 @@ def get_relations(relNo, word_to_find):
 			elif (relNo == '12'):  # Dharma
 				rel_name = "dharma"
 				rel_word = synset_headwd[i]
-			elif (relNo == '13'):  ### guni direct
+			elif (relNo == '13'):  ### guna
 				rel_name = "guna "
-				rel_word = guna_nature[i]
-			elif (relNo == '14'):  # guna
-				rel_name = "guni"
 				rel_word = synset_headwd[i]
+			elif (relNo == '14'):  # guni direct
+				rel_name = "guni"
+				rel_word = guna_nature[i]
 			elif (relNo == '15'):  ####\ sambandhitah
 				rel_name = "Anya Sambandhitah"
 				rel_word = anya_connection[i]
