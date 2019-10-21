@@ -24,7 +24,7 @@ class vkProp:
 	def __init__(self, isheadword, padam, pratam, nigama, linga, adhyaya, kanda, eng_meaning, sans_meaning,
 				 meaning_source, synset, avyaya,
 				 parapara, janyajanaka, patipatni, swaswamy, dharma, guna, anya, upajivika, avatara, jathi, upadhi,
-				 wx_padam, wx_artha, onto_words):
+				 wx_padam, wx_artha, onto_words, headword):
 		# swaswamy, vaishistya,anya,ajiviak,avatara, patipatni, upadhi):
 		self.isheadword = isheadword
 		self.padam = padam
@@ -52,6 +52,7 @@ class vkProp:
 		self.wx_padam = wx_padam
 		self.wx_artha = wx_artha
 		self.onto_words = onto_words
+		self.headword = headword
 
 
 def printJsonOutput(classArray):
@@ -97,7 +98,8 @@ def printJsonOutput(classArray):
 				jsonStr += '"wx_artha": "' + vkRow[j].wx_artha + '",' + os.linesep
 				jsonStr += '"onto_word": "' + vkRow[j].onto_words + '",' + os.linesep
 
-				jsonStr += '"headword": "' + vkRow[j].synset + '"' + os.linesep
+				jsonStr += '"headword": "' + vkRow[j].synset + '",' + os.linesep
+				jsonStr += '"rel_headword": "' + vkRow[j].headword + '"' + os.linesep
 
 				jsonStr += '}'
 				if j < sizeArray[rowid] - 1:
@@ -177,7 +179,7 @@ def get_synonyms(word_to_find, rel_word, relnostr):
 
 					p2 = vkProp("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
 								"17", \
-								"19", "20", "21", "22", "23", "24", "25", "26", "27")
+								"19", "20", "21", "22", "23", "24", "25", "26", "27", "28")
 					p2.padam = padam_word[j]
 					p2.nigama = nigama_reference[j]
 					p2.adhyaya = adhyaya_chapter[j]
@@ -196,6 +198,7 @@ def get_synonyms(word_to_find, rel_word, relnostr):
 					p2.anya = anya_connection[j]
 					p2.upajivika = upajivika_profession[j]
 					p2.avatara = avatara_incarnation[j]
+					p2.headword = synset_headwd[j]
 					p2.onto_word = ""
 
 					p2.upadhi = upadhi_attr[j]
@@ -310,8 +313,10 @@ def get_relations(relNo, word_to_find):
 
 
 def get_ontology(onto_word, upadi_word):  # Col 18 Jathi/ Upadhi
-	jathi_words.append(onto_word)
-	upadhi_words.append(upadi_word)
+	if(onto_word != ''):
+		jathi_words.append(onto_word)
+	if(upadi_word != ''):
+		upadhi_words.append(upadi_word)
 	print("This is Ontology function, onto word is", onto_word)
 	# for i in range(0,sheet2_maxRows-1):
 	# print (i,col1[i],col2[i])
@@ -327,35 +332,35 @@ def get_ontology(onto_word, upadi_word):  # Col 18 Jathi/ Upadhi
 	upadi_word_check = upadi_word
 
 	p3 = vkProp("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
-				"17", "19", "20", "21", "22", "23", "24", "25", "26", "27")
+				"17", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28")
 	p3.onto_words = onto_word
-	myVK[0][n] = p3
-	n = n+1
 
 	for ixno in range(jathi_maxRows - 1, 0, -1):
 		#print (ixno, jathi1[ixno], jathi2[ixno])
-		if (jathi1[ixno] == onto_word_check):
-			p3 = vkProp("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
-						"17", "19", "20", "21", "22", "23", "24", "25", "26", "27")
-			jathi_words.append(jathi2[ixno])
-			p3.onto_words = jathi2[ixno]
-			myVK[0][n] = p3
+		if (onto_word_check != '' and jathi1[ixno] == onto_word_check):
+			myVK[0][0] = p3
 			n = n + 1
+			p4 = vkProp("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
+						"17", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28")
+			jathi_words.append(jathi2[ixno])
+			p4.onto_words = jathi2[ixno]
+			myVK[0][n] = p4
 			onto_word_check = jathi2[ixno]
 
 	for ixno in range(upadhi_maxRows - 1, 0, -1):
-		if (upadhi1[ixno] == upadi_word_check):
-			p3 = vkProp("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
-						"17", "19", "20", "21", "22", "23", "24", "25", "26", "27")
-			jathi_words.append(upadhi1[ixno] + '_up')
-			p3.onto_words = upadhi1[ixno] + '_up'
-			myVK[0][n] = p3
+		if (upadi_word_check != '' and upadhi1[ixno] == upadi_word_check):
+			myVK[0][0] = p3
 			n = n + 1
+			p4 = vkProp("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
+						"17", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28")
+			jathi_words.append(upadhi1[ixno] + '_up')
+			p4.onto_words = upadhi1[ixno] + '_up'
+			myVK[0][n] = p4
 			upadi_word_check = upadhi2[ixno]
 		'''increment the index only if there are elements in the array'''
 	print ('n=' , n)
 	if (n > 0):
-		sizeArray[0] = n  # This is to keep track of which row in the array has valid data and which are blank
+		sizeArray[0] = n+1  # This is to keep track of which row in the array has valid data and which are blank
 
 	for w in jathi_words:
 		print ('===>', w)
@@ -419,7 +424,7 @@ upadhi2 = []
 
 p1 = vkProp("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "19", "20",
 			"21", "22", \
-			"23", "24", "25", "26", "27")
+			"23", "24", "25", "26", "27", "28")
 
 # m = 0
 ##Getting all the values of xl in an array
