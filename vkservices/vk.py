@@ -111,7 +111,7 @@ def printJsonOutput(classArray):
 	return jsonStr
 
 
-def get_synonyms(word_to_find, rel_word, relnostr):
+def get_synonyms(word_to_find, rel_word, relnostr, relhead):
 	myVK = [[vkProp for i in range(cols)] for j in range(rows)]
 	global m
 	compare_word = ""
@@ -198,7 +198,10 @@ def get_synonyms(word_to_find, rel_word, relnostr):
 					p2.anya = anya_connection[j]
 					p2.upajivika = upajivika_profession[j]
 					p2.avatara = avatara_incarnation[j]
-					p2.headword = synset_headwd[j]
+					if(relhead != ''):
+						p2.headword = relhead
+					else:
+						p2.headword = ''
 					p2.onto_word = ""
 
 					p2.upadhi = upadhi_attr[j]
@@ -231,6 +234,7 @@ def get_relations(relNo, word_to_find):
 					0, 0, 0, 0, 0,
 					0, 0, 0, 0, 0]
 	idx = 0
+	relhead = ''
 
 	for i in range(0, maxRows - 1):
 		if ((padam_word[i] == word_to_find) or (
@@ -244,6 +248,7 @@ def get_relations(relNo, word_to_find):
 			elif (relNo == '3'):  # para hypernym direct
 				rel_name = "Hypernym"
 				rel_word = para_kindof[i]
+				relhead = synset_headwd[i]
 			elif (relNo == '4'):  #### hyponym
 				rel_name = "Hyponym"
 				rel_word = synset_headwd[i]
@@ -253,9 +258,11 @@ def get_relations(relNo, word_to_find):
 			elif (relNo == '6'):  ## janaka direct
 				rel_name = "Janaka"
 				rel_word = janyajanaka_cp[i]
+				relhead = synset_headwd[i]
 			elif (relNo == '7'):  ### Pati direct
 				rel_name = "Pati "
 				rel_word = patipatni_hw[i]
+				relhead = synset_headwd[i]
 			elif (relNo == '8'):  # Patni
 				rel_name = "Patni"
 				rel_word = synset_headwd[i]
@@ -265,9 +272,11 @@ def get_relations(relNo, word_to_find):
 			elif (relNo == '10'):  # swamy direct
 				rel_name = "Swamy"
 				rel_word =   swaswamy_mp[i]
+				relhead = synset_headwd[i]
 			elif (relNo == '11'):  ### Dharmi direct
 				rel_name = "Dharmi "
 				rel_word = dharma_pos[i]
+				relhead = synset_headwd[i]
 			elif (relNo == '12'):  # Dharma
 				rel_name = "dharma"
 				rel_word = synset_headwd[i]
@@ -277,18 +286,22 @@ def get_relations(relNo, word_to_find):
 			elif (relNo == '14'):  # guni direct
 				rel_name = "guni"
 				rel_word = guna_nature[i]
+				relhead = synset_headwd[i]
 			elif (relNo == '15'):  ####\ sambandhitah
 				rel_name = "Anya Sambandhitah"
 				rel_word = anya_connection[i]
+				relhead = synset_headwd[i]
 			elif (relNo == '16'):  #####upajeevyah direct
 				rel_name = "Upajeevyah"
 				rel_word = upajivika_profession[i]
+				relhead = synset_headwd[i]
 			elif (relNo == '17'):  #####upajeevikah
 				rel_name = "Upajeevakah"
 				rel_word = synset_headwd[i]
 			elif (relNo == '18'):  #### avatara
 				rel_name = "Avatara"
 				rel_word = avatara_incarnation[i]
+				relhead = synset_headwd[i]
 			elif (relNo == '19'):
 				rel_name = 'Ontology'
 				rel_word = jathi_class[i]
@@ -298,7 +311,7 @@ def get_relations(relNo, word_to_find):
 			print("Relation used : ", rel_name)
 
 			if (relNo != "19"):
-				test = get_synonyms("null", rel_word, relNo)
+				test = get_synonyms("null", rel_word, relNo, relhead)
 			else:
 				test = get_ontology(rel_word, upadhi_word)
 			for i in range(0, cols):

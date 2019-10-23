@@ -14,7 +14,7 @@ rel_jsonstr = ""
 
 if (rel_No == "0"):
 	print("The synonyms")    # Col 8 Synset 1
-	rel_vkArrayOutput = get_synonyms(word_find, "null", 0)
+	rel_vkArrayOutput = get_synonyms(word_find, "null", 0, '')
 	print("")
 	rel_jsonstr = printJsonOutput(rel_vkArrayOutput)
 	print("Json String is")
